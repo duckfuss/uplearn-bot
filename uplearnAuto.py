@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 import time
+from multiprocessing import Process
 
 class uplearnLazy():
     def __init__(self) -> None:
@@ -93,6 +94,15 @@ class chemBot(uplearnLazy):
             self.answerQuestion(self.forcesOnElectronsAnswers[i])
         self.returnToQuiz("/html/body/div[1]/div/div/ul/li[4]/a/div/div[1]")
 
-physDuck = physicsBot()
-while True:
-    physDuck.quizKinematics()
+def loopA():
+    physDuck = physicsBot()
+    while True:
+        physDuck.quizKinematics()
+def loopB():
+    chemDuck = chemBot()
+    while True:
+        chemDuck.quizForcesOnElectrons()
+
+if __name__ == '__main__':
+    Process(target=loopA).start()
+    #Process(target=loopB).start()
