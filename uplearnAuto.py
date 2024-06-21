@@ -11,6 +11,11 @@ class uplearnLazy():
         self.options = Options()
         #self.options.add_argument("--headless") # uncomment for headless mode
         self.browser = webdriver.Firefox(options=self.options)
+        self.answersDict = {"A": "/html/body/div[1]/div/div/div/main/div/div[2]/div[1]/div[1]/div/section/div/label[1]",
+                            "B": "/html/body/div[1]/div/div/div/main/div/div[2]/div[1]/div[1]/div/section/div/label[2]",
+                            "C": "/html/body/div[1]/div/div/div/main/div/div[2]/div[1]/div[1]/div/section/div/label[3]",
+                            "D": "/html/body/div[1]/div/div/div/main/div/div[2]/div[1]/div[1]/div/section/div/label[4]",
+                            "E": "/html/body/div[1]/div/div/div/main/div/div[2]/div[1]/div[1]/div/section/div/label[5]"}
     def login(self):
         usrnme = None
         while not usrnme:
@@ -23,12 +28,12 @@ class uplearnLazy():
                 enterButton.click()
             except NoSuchElementException:
                 time.sleep(1)
-    def answerQuestion(self, element):
-        Button = self.browser.find_element(By.XPATH, element)
+    def answerQuestion(self, answer, t=1):
+        Button = self.browser.find_element(By.XPATH, self.answersDict[answer])
         self.browser.execute_script("arguments[0].click();", Button)
         submitButton = self.browser.find_element(By.XPATH, "/html/body/div[1]/div/div/div/main/div/div[2]/div[2]/div/button")
         self.browser.execute_script("arguments[0].click();", submitButton)
-        time.sleep(1)
+        time.sleep(t)
         continueButton = None
         while not continueButton:
             try:
@@ -51,41 +56,7 @@ class uplearnLazy():
             except NoSuchElementException:
                 time.sleep(0.2)
         self.browser.execute_script("arguments[0].click();", return2)
-
-class physicsBot(uplearnLazy):
-    def __init__(self) -> None:
-        uplearnLazy.__init__(self)
-        self.browser.get("https://web.uplearn.co.uk/learn/physics-1/kinematics/displacementtime-and-velocitytime-mastery-2-quizzes")
-        self.login()
-        self.answers = {"B":"/html/body/div[1]/div/div/div/main/div/div[2]/div[1]/div[1]/div/section/div/label[2]",
-                        "C":"/html/body/div[1]/div/div/div/main/div/div[2]/div[1]/div[1]/div/section/div/label[3]"}
-    def quizKinematics(self):
-        time.sleep(0.5)
-        startButton = None
-        while not startButton:
-            try:
-                startButton = self.browser.find_element(By.XPATH, '//button[@class="sc-EElJA sc-eXuhCa jgIuES dpmZGi"]')
-                startButton.click()
-            except NoSuchElementException: 
-                time.sleep(0.5)
-        for i in range(3):
-            self.answerQuestion(self.answers["B"])
-            self.answerQuestion(self.answers["C"])
-        self.answerQuestion(self.answers["B"])
-        self.returnToQuiz("/html/body/div[1]/div/div/ul/li[17]/a/div")
-
-class chemBot(uplearnLazy):
-    def __init__(self) -> None:
-        uplearnLazy.__init__(self)
-        self.browser.get("https://web.uplearn.co.uk/learn/chemistry-ocr-2/forces-on-electrons/forces-on-electrons-fluency-quiz-1-quizzes")
-        self.login()
-        self.forcesOnElectronsAnswers = {0: "/html/body/div[1]/div/div/div/main/div/div[2]/div[1]/div[1]/div/section/div/label[2]/p/span/span",
-                        1: "/html/body/div[1]/div/div/div/main/div/div[2]/div[1]/div[1]/div/section/div/label[4]/p/span/span",
-                        2: "/html/body/div[1]/div/div/div/main/div/div[2]/div[1]/div[1]/div/section/div/label[3]/p/span/span",
-                        3: "/html/body/div[1]/div/div/div/main/div/div[2]/div[1]/div[1]/div/section/div/label[1]/p/span/span",
-                        4: "/html/body/div[1]/div/div/div/main/div/div[2]/div[1]/div[1]/div/section/div/label[5]/p/span/span",
-                        5: "/html/body/div[1]/div/div/div/main/div/div[2]/div[1]/div[1]/div/section/div/label[4]/p/span/span"}
-    def quizForcesOnElectrons(self):
+    def quizController(self, answersList):
         time.sleep(0.5)
         startButton = None
         while not startButton:
@@ -95,21 +66,44 @@ class chemBot(uplearnLazy):
             except NoSuchElementException: 
                 time.sleep(0.5)
         for i in range(6):
-            self.answerQuestion(self.forcesOnElectronsAnswers[i])
+            self.answerQuestion(answersList[i])
+
+class physicsBot(uplearnLazy):
+    def __init__(self) -> None:
+        uplearnLazy.__init__(self)
+        self.browser.get("https://web.uplearn.co.uk/learn/physics-1/kinematics/displacementtime-and-velocitytime-mastery-2-quizzes")
+        self.login()
+    def quizKinematics(self):
+        self.quizController(["B", "C", "B", "C", "B", "C", "B"])
+        self.returnToQuiz("/html/body/div[1]/div/div/ul/li[17]/a/div")
+
+class chemBot(uplearnLazy):
+    def __init__(self) -> None:
+        uplearnLazy.__init__(self)
+        self.browser.get("https://web.uplearn.co.uk/learn/chemistry-ocr-2/forces-on-electrons/forces-on-electrons-fluency-quiz-1-quizzes")
+        self.login()
+    def quizForcesOnElectrons(self):
+        self.quizController(["B", "D", "C", "A", "E", "D"])
         self.returnToQuiz("/html/body/div[1]/div/div/ul/li[4]/a/div/div[1]")
 
 def loopA():
     physDuck = physicsBot()
     count = 0
+    initial = time.perf_counter()
     while True:
+        tic = time.perf_counter()
         count += 1
         physDuck.quizKinematics()
-        print(count)
+        toc = time.perf_counter()
+        print(count, f"in {toc - tic:0.4f} seconds",f"since start: {toc - initial:0.4f} seconds" )
+
 def loopB():
     chemDuck = chemBot()
     while True:
         chemDuck.quizForcesOnElectrons()
 
+
+
 if __name__ == '__main__':
-    Process(target=loopA).start()
-    #Process(target=loopB).start()
+    #Process(target=loopA).start()
+    Process(target=loopB).start()
