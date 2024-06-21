@@ -1,3 +1,4 @@
+#!/opt/homebrew/bin/python3
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
@@ -97,13 +98,19 @@ def loopA():
     physDuck = physicsBot()
     count = 0
     initial = time.perf_counter()
-    while True:
+    while count<1:
         tic = time.perf_counter()
-        count += 1
         physDuck.quizKinematics()
-        toc = time.perf_counter()
-        print(count, f"in {toc - tic:0.4f} seconds",f"since start: {toc - initial:0.4f} seconds" )
-
+        count += 1
+        tD = time.perf_counter() - tic
+        rT = time.strftime("%H:%M:%S", time.gmtime(time.perf_counter() - initial))
+        print(count, f"quizes \t in {tD:0.4f} s\t",
+              f"{7/tD:0.4f} quiz/s\t", 
+              f"{14/tD:0.4f} xp/s\t", 
+              f"{(72*(tD))/14:0.4f} s = 1hr\t", # uplearn counts 72 xp as 1hr
+              f"{14*count:0.4f} tot xp\t",
+              f"{(14*count)/72:0.4f} tot hrs\t"
+              f"in", rT)
 def loopB():
     chemDuck = chemBot()
     while True:
