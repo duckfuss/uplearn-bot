@@ -28,6 +28,7 @@ class uplearnLazy():
                 enterButton.click()
             except NoSuchElementException:
                 time.sleep(1)
+
     def answerQuestion(self, answer, t=1):
         Button = self.browser.find_element(By.XPATH, self.answersDict[answer])
         self.browser.execute_script("arguments[0].click();", Button)
@@ -42,6 +43,7 @@ class uplearnLazy():
                 time.sleep(0.1)
                 print("waited")
         self.browser.execute_script("arguments[0].click();", continueButton)
+
     def returnToQuiz(self, quizElement):
         return1, return2 = None, None
         while not return1:
@@ -56,6 +58,7 @@ class uplearnLazy():
             except NoSuchElementException:
                 time.sleep(0.2)
         self.browser.execute_script("arguments[0].click();", return2)
+
     def quizController(self, answersList):
         time.sleep(0.5)
         startButton = None
@@ -68,23 +71,31 @@ class uplearnLazy():
         for i in range(6):
             self.answerQuestion(answersList[i])
 
+
+
 class physicsBot(uplearnLazy):
     def __init__(self) -> None:
         uplearnLazy.__init__(self)
         self.browser.get("https://web.uplearn.co.uk/learn/physics-1/kinematics/displacementtime-and-velocitytime-mastery-2-quizzes")
         self.login()
+
     def quizKinematics(self):
         self.quizController(["B", "C", "B", "C", "B", "C", "B"])
         self.returnToQuiz("/html/body/div[1]/div/div/ul/li[17]/a/div")
+
 
 class chemBot(uplearnLazy):
     def __init__(self) -> None:
         uplearnLazy.__init__(self)
         self.browser.get("https://web.uplearn.co.uk/learn/chemistry-ocr-2/forces-on-electrons/forces-on-electrons-fluency-quiz-1-quizzes")
         self.login()
+
     def quizForcesOnElectrons(self):
         self.quizController(["B", "D", "C", "A", "E", "D"])
         self.returnToQuiz("/html/body/div[1]/div/div/ul/li[4]/a/div/div[1]")
+
+
+
 
 def loopA():
     physDuck = physicsBot()
@@ -101,7 +112,6 @@ def loopB():
     chemDuck = chemBot()
     while True:
         chemDuck.quizForcesOnElectrons()
-
 
 
 if __name__ == '__main__':
