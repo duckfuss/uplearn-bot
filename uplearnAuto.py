@@ -98,7 +98,7 @@ def loopA():
     physDuck = physicsBot()
     count = 0
     initial = time.perf_counter()
-    while count<1:
+    while count<10:
         tic = time.perf_counter()
         physDuck.quizKinematics()
         count += 1
