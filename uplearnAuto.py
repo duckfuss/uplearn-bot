@@ -18,7 +18,7 @@ class uplearnLazy():
                             "E": "/html/body/div[1]/div/div/div/main/div/div[2]/div[1]/div[1]/div/section/div/label[5]"}
     def login(self):
         usrnme = None
-        while not usrnme:
+        while not usrnme: # wait for page to load
             try:
                 usrnme = self.browser.find_element(By.ID, "input-1")
                 pwd = self.browser.find_element(By.ID, "input-2")
@@ -34,14 +34,13 @@ class uplearnLazy():
         self.browser.execute_script("arguments[0].click();", Button)
         submitButton = self.browser.find_element(By.XPATH, "/html/body/div[1]/div/div/div/main/div/div[2]/div[2]/div/button")
         self.browser.execute_script("arguments[0].click();", submitButton)
-        time.sleep(t)
+        time.sleep(t) # neccesary delay to circumnavigate uplearns spam filters
         continueButton = None
         while not continueButton:
             try:
                 continueButton = self.browser.find_element(By.XPATH, "/html/body/div[1]/div/div/div/main/div/div[2]/div[2]/div/button[2]")
             except NoSuchElementException:
                 time.sleep(0.1)
-                print("waited")
         self.browser.execute_script("arguments[0].click();", continueButton)
 
     def returnToQuiz(self, quizElement):
@@ -60,18 +59,15 @@ class uplearnLazy():
         self.browser.execute_script("arguments[0].click();", return2)
 
     def quizController(self, answersList):
-        time.sleep(0.5)
         startButton = None
         while not startButton:
             try:
                 startButton = self.browser.find_element(By.XPATH, '//button[@class="sc-EElJA sc-eXuhCa jgIuES dpmZGi"]')
-                startButton.click()
             except NoSuchElementException: 
                 time.sleep(0.5)
+        startButton.click()
         for i in range(6):
             self.answerQuestion(answersList[i])
-
-
 
 class physicsBot(uplearnLazy):
     def __init__(self) -> None:
@@ -115,5 +111,5 @@ def loopB():
 
 
 if __name__ == '__main__':
-    #Process(target=loopA).start()
-    Process(target=loopB).start()
+    Process(target=loopA).start()
+    #Process(target=loopB).start()
