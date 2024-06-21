@@ -63,9 +63,10 @@ class uplearnLazy():
         startButton = None
         while not startButton:
             try:
-                startButton = self.browser.find_element(By.XPATH, '//button[@class="sc-EElJA sc-eXuhCa jgIuES dpmZGi"]')
+                startButton = self.browser.find_element(By.XPATH, '/html/body/div[1]/div/div/div/main/div/button')
             except NoSuchElementException: 
                 time.sleep(0.5)
+                print("finding start button")
         startButton.click()
         for i in range(6):
             self.answerQuestion(answersList[i])
@@ -90,7 +91,6 @@ class chemBot(uplearnLazy):
     def quizForcesOnElectrons(self):
         self.quizController(["B", "D", "C", "A", "E", "D"])
         self.returnToQuiz("/html/body/div[1]/div/div/ul/li[4]/a/div/div[1]")
-
 
 
 
