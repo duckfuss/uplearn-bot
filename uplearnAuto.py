@@ -1,12 +1,16 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.firefox.options import Options
 import time
 from multiprocessing import Process
 
+
 class uplearnLazy():
     def __init__(self) -> None:
-        self.browser = webdriver.Firefox()
+        self.options = Options()
+        #self.options.add_argument("--headless") # uncomment for headless mode
+        self.browser = webdriver.Firefox(options=self.options)
     def login(self):
         usrnme = None
         while not usrnme:
@@ -24,7 +28,7 @@ class uplearnLazy():
         self.browser.execute_script("arguments[0].click();", Button)
         submitButton = self.browser.find_element(By.XPATH, "/html/body/div[1]/div/div/div/main/div/div[2]/div[2]/div/button")
         self.browser.execute_script("arguments[0].click();", submitButton)
-        time.sleep(1.1)
+        time.sleep(1)
         continueButton = None
         while not continueButton:
             try:
@@ -96,8 +100,11 @@ class chemBot(uplearnLazy):
 
 def loopA():
     physDuck = physicsBot()
+    count = 0
     while True:
+        count += 1
         physDuck.quizKinematics()
+        print(count)
 def loopB():
     chemDuck = chemBot()
     while True:
