@@ -66,7 +66,6 @@ class uplearnLazy():
                 startButton = self.browser.find_element(By.XPATH, '/html/body/div[1]/div/div/div/main/div/button')
             except NoSuchElementException: 
                 time.sleep(0.5)
-                print("finding start button")
         startButton.click()
         for i in range(6):
             self.answerQuestion(answersList[i])
@@ -98,7 +97,7 @@ def loopA():
     physDuck = physicsBot()
     count = 0
     initial = time.perf_counter()
-    while count<10:
+    while True:
         tic = time.perf_counter()
         physDuck.quizKinematics()
         count += 1
