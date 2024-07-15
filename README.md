@@ -4,6 +4,8 @@ disclaimer, this is an educational project, do not use it to violate the TOS of 
 
 # Installation:
 
-1. pip3 install selenium
+1. type into terminal:
+   pip install selenium (win)
+   pip3 install selenium (mac)
 
-2. download firefox: https://www.mozilla.org/en-GB/firefox/new/
+3. download firefox: https://www.mozilla.org/en-GB/firefox/new/
