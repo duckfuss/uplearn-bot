@@ -117,5 +117,5 @@ def loopB():
 
 
 if __name__ == '__main__':
-    Process(target=loopA).start()
-    #Process(target=loopB).start()
+    #Process(target=loopA).start()
+    Process(target=loopB).start()
