@@ -10,5 +10,8 @@ disclaimer, this is an educational project, **do not use it to violate the TOS o
    ```
 3. download firefox: https://www.mozilla.org/en-GB/firefox/new/
 4. clone this repo
-5. run the file "uplearnAuto"
-6. you will be prompted in terminal to input your username and password
+   ```
+   git clone https://github.com/duckfuss/uplearn-bot
+   ```
+6. run the file "uplearnAuto"
+7. you will be prompted in terminal to input your username and password
