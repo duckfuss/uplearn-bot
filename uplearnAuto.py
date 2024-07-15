@@ -120,10 +120,9 @@ def loopB():
 loopA()
 
 '''
-Multithreading is possible below, but you must first hardcode
-the username and password fields in uplearnLazy, as input()
-doesn't work with multithreading
-also uncomment the nultithreading import
+Multithreading is possible below, but you must first hardcode the username and
+password fields in uplearnLazy, as input() doesn't work with multithreading
+Also uncomment the multithreading import!
 if __name__ == '__main__':
     #Process(target=loopA).start()
     Process(target=loopB).start()
