@@ -4,10 +4,11 @@ disclaimer, this is an educational project, **do not use it to violate the TOS o
 
 # Installation and usage:
 
-1. type into terminal:
+1. type into terminal to install selenium:
    ```
    pip3 install selenium
    ```
 3. download firefox: https://www.mozilla.org/en-GB/firefox/new/
-4. run the file "uplearnAuto"
-5. you will be prompted in terminal to input your username and password
+4. clone this repo
+5. run the file "uplearnAuto"
+6. you will be prompted in terminal to input your username and password
