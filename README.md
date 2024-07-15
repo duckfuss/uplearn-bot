@@ -6,6 +6,6 @@ disclaimer, this is an educational project, **do not use it to violate the TOS o
 
 1. type into terminal:
    ```
-   pip3 install selenium (mac)
+   pip3 install selenium
    ```
 3. download firefox: https://www.mozilla.org/en-GB/firefox/new/
