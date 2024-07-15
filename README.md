@@ -1,1 +1,1 @@
-run uplearn auto - a bot to automate uplearn
+A python bot, using selenium, to automate uplearn
