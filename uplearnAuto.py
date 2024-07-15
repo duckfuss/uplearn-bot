@@ -19,13 +19,15 @@ class uplearnLazy():
                             "E": "/html/body/div[1]/div/div/div/main/div/div[2]/div[1]/div[1]/div/section/div/label[5]"}
     def login(self):
         usrnme = None
+        username = input('what is your username? ')
+        password = input('what is your password? ')
         while not usrnme: # wait for page to load
             try:
                 usrnme = self.browser.find_element(By.ID, "input-1")
                 pwd = self.browser.find_element(By.ID, "input-2")
                 enterButton = self.browser.find_element(By.TAG_NAME, "button")
-                usrnme.send_keys("fussd001@chartersschool.org.uk")
-                pwd.send_keys("uplearnG0ldf!sh")
+                usrnme.send_keys(username)
+                pwd.send_keys(password)
                 enterButton.click()
             except NoSuchElementException:
                 time.sleep(1)
@@ -115,7 +117,13 @@ def loopB():
     while True:
         chemDuck.quizForcesOnElectrons()
 
+loopA()
 
+'''
+Multithreading is possible below, but you must first hardcode
+the username and password fields in uplearnLazy, as input()
+doesn't work with multithreading
 if __name__ == '__main__':
     #Process(target=loopA).start()
     Process(target=loopB).start()
+'''
