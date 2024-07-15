@@ -31,44 +31,30 @@ class uplearnLazy():
                 enterButton.click()
             except NoSuchElementException:
                 time.sleep(1)
-
+    def xpathClick(self, path, click=True):
+        btn, c = None, 0
+        while not btn:
+            c+=1
+            try:    btn = self.browser.find_element(By.XPATH, path)
+            except NoSuchElementException:  time.sleep(0.1)
+            if c > 100:
+                print("timeout looking for: ", path)
+                return btn
+        if click:   
+            self.browser.execute_script("arguments[0].click();", btn)
+        return btn
     def answerQuestion(self, answer, t=1):
-        Button = self.browser.find_element(By.XPATH, self.answersDict[answer])
-        self.browser.execute_script("arguments[0].click();", Button)
-        submitButton = self.browser.find_element(By.XPATH, "/html/body/div[1]/div/div/div/main/div/div[2]/div[2]/div/button")
-        self.browser.execute_script("arguments[0].click();", submitButton)
+        self.xpathClick(self.answersDict[answer]) # click button
+        self.xpathClick("/html/body/div[1]/div/div/div/main/div/div[2]/div[2]/div/button") # click submit
         time.sleep(t) # neccesary delay to circumnavigate uplearns spam filters
-        continueButton = None
-        while not continueButton:
-            try:
-                continueButton = self.browser.find_element(By.XPATH, "/html/body/div[1]/div/div/div/main/div/div[2]/div[2]/div/button[2]")
-            except NoSuchElementException:
-                time.sleep(0.1)
-        self.browser.execute_script("arguments[0].click();", continueButton)
+        self.xpathClick("/html/body/div[1]/div/div/div/main/div/div[2]/div[2]/div/button[2]") # click continue
 
     def returnToQuiz(self, quizElement):
-        return1, return2 = None, None
-        while not return1:
-            try:
-                return1 = self.browser.find_element(By.XPATH, "/html/body/div[1]/div/div/div/header/div/span[3]/a")
-            except NoSuchElementException:
-                time.sleep(0.2)
-        self.browser.execute_script("arguments[0].click();", return1)
-        while not return2:
-            try:
-                return2 = self.browser.find_element(By.XPATH, quizElement)
-            except NoSuchElementException:
-                time.sleep(0.2)
-        self.browser.execute_script("arguments[0].click();", return2)
+        self.xpathClick("/html/body/div[1]/div/div/div/header/div/span[3]/a") # return
+        self.xpathClick(quizElement)
 
     def quizController(self, answersList):
-        startButton = None
-        while not startButton:
-            try:
-                startButton = self.browser.find_element(By.XPATH, '/html/body/div[1]/div/div/div/main/div/button')
-            except NoSuchElementException: 
-                time.sleep(0.5)
-        startButton.click()
+        self.xpathClick('/html/body/div[1]/div/div/div/main/div/button') # click start
         for i in range(6):
             self.answerQuestion(answersList[i])
 
