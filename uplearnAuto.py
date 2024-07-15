@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.firefox.options import Options
 import time
-from multiprocessing import Process
+#from multiprocessing import Process 
 
 
 class uplearnLazy():
@@ -123,6 +123,7 @@ loopA()
 Multithreading is possible below, but you must first hardcode
 the username and password fields in uplearnLazy, as input()
 doesn't work with multithreading
+also uncomment the nultithreading import
 if __name__ == '__main__':
     #Process(target=loopA).start()
     Process(target=loopB).start()
