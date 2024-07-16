@@ -107,7 +107,7 @@ loopA()
 '''
 Multithreading is possible below, but you must first hardcode the username and
 password fields in uplearnLazy, as input() doesn't work with multithreading
-from multiprocessing import Process 
+from multiprocessing import Process.
 if __name__ == '__main__':
     #Process(target=loopA).start() # uncomment to run this thread
     Process(target=loopB).start()
