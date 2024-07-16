@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.firefox.options import Options
 import time
-#from multiprocessing import Process 
+
 
 
 class uplearnLazy():
@@ -43,11 +43,6 @@ class uplearnLazy():
         if click:   
             self.browser.execute_script("arguments[0].click();", btn)
         return btn
-    def answerQuestion(self, answer, t=1):
-        self.xpathClick(self.answersDict[answer]) # click button
-        self.xpathClick("/html/body/div[1]/div/div/div/main/div/div[2]/div[2]/div/button") # click submit
-        time.sleep(t) # neccesary delay to circumnavigate uplearns spam filters
-        self.xpathClick("/html/body/div[1]/div/div/div/main/div/div[2]/div[2]/div/button[2]") # click continue
 
     def returnToQuiz(self, quizElement):
         self.xpathClick("/html/body/div[1]/div/div/div/header/div/span[3]/a") # return
@@ -56,7 +51,11 @@ class uplearnLazy():
     def quizController(self, answersList):
         self.xpathClick('/html/body/div[1]/div/div/div/main/div/button') # click start
         for i in range(6):
-            self.answerQuestion(answersList[i])
+            self.xpathClick(self.answersDict[answersList[i]]) # click button
+            self.xpathClick("/html/body/div[1]/div/div/div/main/div/div[2]/div[2]/div/button") # click submit
+            time.sleep(1) # neccesary delay to circumnavigate uplearns spam filters
+            self.xpathClick("/html/body/div[1]/div/div/div/main/div/div[2]/div[2]/div/button[2]") # click continue
+        
 
 class physicsBot(uplearnLazy):
     def __init__(self) -> None:
@@ -108,8 +107,8 @@ loopA()
 '''
 Multithreading is possible below, but you must first hardcode the username and
 password fields in uplearnLazy, as input() doesn't work with multithreading
-Also uncomment the multithreading import!
+from multiprocessing import Process 
 if __name__ == '__main__':
-    #Process(target=loopA).start()
+    #Process(target=loopA).start() # uncomment to run this thread
     Process(target=loopB).start()
 '''
